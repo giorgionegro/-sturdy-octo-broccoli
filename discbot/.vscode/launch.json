@@ -1,0 +1,20 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Bot",
+			"protocol": "inspector",
+			"args": ["${workspaceRoot}/src/index.ts"],
+			"env": {
+				"NODE_ENV": "development",
+				"REDIS_HOST": "localhost"
+			},
+			"cwd": "${workspaceRoot}",
+			"runtimeArgs": ["-r", "ts-node/register/transpile-only"],
+			"internalConsoleOptions": "neverOpen",
+			"restart": true
+		}
+	]
+}
