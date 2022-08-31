@@ -58,7 +58,7 @@ export default class Play implements BaseCommand {
 				const [video] = await YouTubeVideo.search(query, 1);
 
 				if (!video?.id?.videoId) throw new CmdRequirementError('I could not find a video. Try something less specific?');
-
+				
 				const youtubeVideo = YouTubeVideo.fromId(video.id.videoId);
 
 				if (youtubeInterface.busy) {

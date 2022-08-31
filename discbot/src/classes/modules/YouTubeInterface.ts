@@ -204,9 +204,7 @@ export class YouTubeInterface {
 					});
 				} catch (error) {
 					console.error(error);
-					this.events.emit('next');
-					this.queue.delete(this.pointer - 1);
-					resolve(true);
+					resolve(false);
 				}
 			})
 			/* eslint-enable no-async-promise-executor */

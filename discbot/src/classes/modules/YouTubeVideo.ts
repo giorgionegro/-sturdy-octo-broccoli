@@ -22,7 +22,7 @@ export class YouTubeVideo extends YouTubeBase {
 	 * @param id The video ID.
 	 */
 	static fromId(id: string) {
-		return new this(`https://www.youtube.com/watch?v=${id}`);
+			return new this(`https://www.youtube.com/watch?v=${id}`);
 	}
 
 	/**
@@ -63,11 +63,14 @@ export class YouTubeVideo extends YouTubeBase {
 	 */
 	get id() {
 		// The former is the traditional youtube.com/?v=id and the latter is the youtu.be/id URL format.
+		
 		const id = this.urlInstance.searchParams.get('v') || this.urlInstance.pathname.substring(1); // pathname always starts with a '/'
-
 		if (id && YouTubeVideo.validateId(id)) {
 			return id;
 		}
+		
+		console.error(`this is the id: ${id}, pathname: ${this.urlInstance.pathname}`);
+		
 
 		throw TypeError('ID for the video resource cannot be found or was not valid.');
 	}
@@ -90,7 +93,6 @@ export class YouTubeVideo extends YouTubeBase {
 			};
 
 			const response = await globals.youtubeApi.search.list(params);
-
 			return response.data.items || [];
 		} catch (error: any) {
 			console.error(
