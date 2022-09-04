@@ -134,6 +134,7 @@ export class YouTubeVideo extends YouTubeBase {
 	 */
 	async download() {
 		try {
+			console.error(`${this.url}`);
 			const bitstream = await ytdl(this.url, { filter: 'audioonly', highWaterMark: 1 << 25 });
 
 			if (!bitstream) {
@@ -166,6 +167,21 @@ export class YouTubeVideo extends YouTubeBase {
 			console.error(error);
 			return null;
 		}
+	}
+
+	async getNextVideoInfo(){
+		const content = await this.info<YtdlVideoInfoResolved['videoDetails']>('.videoDetails');
+		let title = '?';
+		let author = '?';
+		let thumbnailUrl = '?';
+		if(content != null){
+			title = content.title!=null ? content.title : title;
+			author = content.author.name!=null ? content.author.name : author;
+			if(content.thumbnails!=null && content.thumbnails.length>0){
+				thumbnailUrl = content.thumbnails[0]!=null ? content.thumbnails[0].url : thumbnailUrl;
+			}
+		}
+		return [title, author, thumbnailUrl];
 	}
 }
 

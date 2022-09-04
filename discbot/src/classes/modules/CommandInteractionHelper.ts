@@ -152,6 +152,28 @@ export class CommandInteractionHelper {
 		return this.interaction[type]({ ...messageObject });
 	}
 
+	respondWithInfos(emoji: ResponseEmojis, content: string[]) {
+		const messageObject: InteractionReplyOptions = {};
+		const { Danger, Success } = ColourScheme;
+		const colour = emoji == ResponseEmojis.Danger ? Danger : Success;
+		const footer = {
+			text: "⤵ And I've add it to the end of the queue."
+		}
+
+
+		messageObject.embeds = [
+			new MessageEmbed()
+				.setTitle(`${emoji} I've found this:`)
+				.addField('Title', content[0])
+				.addField('Channel', content[1])
+				.setThumbnail(content[2])
+				.setFooter(footer)
+				.setColor(colour)
+		];
+		return this.interaction['followUp']({ ...messageObject });
+	}
+
+
 	/**
 	 * Join a Discord voice channel.
 	 *

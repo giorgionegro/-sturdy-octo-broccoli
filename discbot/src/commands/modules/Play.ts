@@ -7,6 +7,7 @@ import {
 	YouTubeVideo
 } from 'bot-classes';
 import { ResponseEmojis } from 'bot-config';
+import { YtdlVideoInfoResolved } from 'bot-classes/modules/YouTubeVideo';
 import { BaseCommand } from '../BaseCommand';
 import { command } from '../decorators/command';
 import Controls from './Controls';
@@ -62,7 +63,9 @@ export default class Play implements BaseCommand {
 				const youtubeVideo = YouTubeVideo.fromId(video.id.videoId);
 
 				if (youtubeInterface.busy) {
-					await handler.respondWithEmoji('As I am currently busy, I will add the video to the end of the queue.', ResponseEmojis.Info);
+					const content: string[] = await youtubeVideo.getNextVideoInfo();
+					await handler.respondWithInfos(ResponseEmojis.Find, content);
+					//await handler.respondWithEmoji('As I am currently busy, I will add the video to the end of the queue.', ResponseEmojis.Info);
 					await youtubeInterface.queue.add(youtubeVideo.id);
 				} else {
 					await youtubeInterface.queue.prepend(youtubeVideo.id);

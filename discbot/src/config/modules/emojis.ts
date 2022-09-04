@@ -10,5 +10,6 @@ export enum ResponseEmojis {
 	'Rubbish' = '🚮',
 	'Speaker' = '🔊',
 	'Scroll' = '📃',
-	'Pensive' = '😔'
+	'Pensive' = '😔',
+	'Find' = '🔎'
 }
