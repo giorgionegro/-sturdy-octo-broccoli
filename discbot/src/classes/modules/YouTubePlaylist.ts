@@ -35,7 +35,7 @@ export class YouTubePlaylist extends YouTubeBase {
 	 * @returns boolean true indicates valid, false indicates not valid.
 	 */
 	private static validateId(id: string) {
-		const regex = /^([a-zA-Z0-9-_]{34}|[a-zA-Z0-9-_]{13}|[a-zA-Z0-9-_]{18})$/;
+		const regex = /^([a-zA-Z0-9-_]{34}|[a-zA-Z0-9-_]{13}|[a-zA-Z0-9-_]{18}|[a-zA-Z0-9-_]{41})$/;
 		return regex.test(id);
 	}
 
@@ -51,7 +51,6 @@ export class YouTubePlaylist extends YouTubeBase {
 		if (id && YouTubePlaylist.validateId(id)) {
 			return id;
 		}
-
 		throw TypeError('ID for the video resource cannot be found.');
 	}
 

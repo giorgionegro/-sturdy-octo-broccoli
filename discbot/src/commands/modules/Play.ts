@@ -33,7 +33,8 @@ export default class Play implements BaseCommand {
 		const youtubeInterface = YouTubeInterface.fromGuild(handler.guild);
 		//if query is a youtube playlist url reinterpret it as a playlist
 		if (query != null) {
-			if (query.startsWith('https://www.youtube.com/playlist?list=')) {
+			console.log(query);
+			if (query.includes('playlist?list=')) {
 				const playlistUrl = query;
 				const youtubePlaylist = YouTubePlaylist.fromUrl(playlistUrl);
 
@@ -53,7 +54,12 @@ export default class Play implements BaseCommand {
 					throw new CmdRequirementError('Failed to add playlist items to the queue. Is the URL valid?');
 				}
 
-
+				if (!youtubeInterface.busy) {
+					youtubeInterface.setPointer(1);
+					await Controls.generateControls(handler, youtubeInterface);
+					handler.status = 'SUCCESS';
+					await youtubeInterface.runner(handler);
+				}
 			}
 			else if (query) {
 				const [video] = await YouTubeVideo.search(query, 1);
